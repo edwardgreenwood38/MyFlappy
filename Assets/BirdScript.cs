@@ -18,11 +18,19 @@ public class BirdScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && birdIsAlive)
+        Touch touch = Input.GetTouch(0);
+
+        if (touch.tapCount > 0 && birdIsAlive)
         {
             myRigidbody.velocity = Vector2.up * flapStr;
         }
-        
+
+        if (myRigidbody.transform.position.y <= -16)
+        {
+            Debug.Log("off screen");
+            logic.gameOver();
+            birdIsAlive = false;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
